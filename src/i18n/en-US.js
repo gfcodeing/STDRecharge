@@ -74,7 +74,11 @@ export default {
     cdkUnavailable: 'CDK unavailable',
     cdkUsed: 'This card key has been used',
     cdkDisabled: 'This card key has been disabled',
+    cdkNotFound: 'Card key not found',
     verifyFailed: 'Account verification failed',
+    tokenExpired: 'accessToken has expired',
+    tokenInvalid: 'Invalid accessToken format',
+    tokenMissingUserId: 'accessToken is missing user id. Please log in manually to get a new token, or contact admin',
     chargeFailed: 'Recharge failed',
     networkError: 'Network error, please try again later'
   },

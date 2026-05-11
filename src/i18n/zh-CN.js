@@ -74,7 +74,11 @@ export default {
     cdkUnavailable: 'CDK不可用',
     cdkUsed: '该卡密已被使用',
     cdkDisabled: '该卡密已被禁用',
+    cdkNotFound: '卡密不存在',
     verifyFailed: '账号验证失败',
+    tokenExpired: 'accessToken 已过期',
+    tokenInvalid: 'accessToken 格式无效',
+    tokenMissingUserId: 'accessToken 缺少 id，请手动登录获取 token 或联系管理员',
     chargeFailed: '充值失败',
     networkError: '网络错误，请稍后重试'
   },

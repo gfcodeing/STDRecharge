@@ -25,5 +25,22 @@ export const LOCALE_PATH_PREFIX_MAP = {
   '/zh': 'zh-CN'
 }
 
+// ===== 后端错误信息国际化规则 =====
+// 后端 msg 统一返回中文，前端在非中文语言下做关键词匹配翻译
+// 规则按数组顺序匹配，命中第一条即返回对应 i18n key，未命中则 fallback 到原 msg
+// 注意：新增后端错误文案时，需在此处同步配置并在 i18n 文件补齐翻译 key
+// match: 匹配后端 msg 的关键词（子串匹配，大小写敏感）
+// key:   i18n 字典中的 key 路径
+export const BACKEND_MSG_I18N_RULES = [
+  // 查询卡密：卡密在数据库中不存在
+  { match: '卡密不存在', key: 'error.cdkNotFound' },
+  // 验证 session/token：accessToken 已过期
+  { match: 'accessToken 已过期', key: 'error.tokenExpired' },
+  // 验证 session/token：accessToken 格式不合法
+  { match: 'accessToken 格式无效', key: 'error.tokenInvalid' },
+  // 验证 session/token：accessToken 中缺少用户标识（id）
+  { match: 'accessToken 缺少用户标识', key: 'error.tokenMissingUserId' }
+]
+
 // 站点名称（网站标题）
 export const SITE_NAME = '快速充值通道'

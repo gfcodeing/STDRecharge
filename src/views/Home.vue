@@ -178,8 +178,10 @@ import { ElMessage } from 'element-plus'
 import { CircleCheckFilled, CircleCloseFilled } from '@element-plus/icons-vue'
 import { RechargeStep, RechargeResult, CdkStatus } from '../enums/status_enums.js'
 import { queryCard, checkAccount, chargeCard } from '../api.js'
+import { translateBackendMsg } from '../utils/backend-msg.js'
 
-const { t } = useI18n()
+const i18n = useI18n()
+const { t } = i18n
 
 const currentStep = ref(RechargeStep.INPUT_CARD_KEY)
 const loading = ref(false)
@@ -202,7 +204,7 @@ async function handleQuery() {
   try {
     const data = await queryCard(secret)
     if (data.code !== 0) {
-      ElMessage.error(data.msg || t('error.queryFailed'))
+      ElMessage.error(translateBackendMsg(data.msg, i18n, 'error.queryFailed'))
       return
     }
     cardInfo.value = data.data
@@ -238,7 +240,7 @@ async function handleVerify() {
   try {
     const data = await checkAccount(cardKey.value.replace(/\s+/g, ''), content)
     if (data.code !== 0) {
-      ElMessage.error(data.msg || t('error.verifyFailed'))
+      ElMessage.error(translateBackendMsg(data.msg, i18n, 'error.verifyFailed'))
       return
     }
     accountInfo.value = data.data
@@ -258,7 +260,7 @@ async function handleCharge() {
     chargeTime.value = new Date().toLocaleString()
     if (data.code !== 0) {
       chargeResult.value = RechargeResult.FAIL
-      chargeErrorMsg.value = data.msg || t('error.chargeFailed')
+      chargeErrorMsg.value = translateBackendMsg(data.msg, i18n, 'error.chargeFailed')
     } else {
       chargeResult.value = RechargeResult.SUCCESS
       chargeErrorMsg.value = ''
