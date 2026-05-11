@@ -116,7 +116,7 @@
             </div>
             <div class="info-row">
               <span class="info-label">{{ t('step3.userId') }}：</span>
-              <span class="info-value">{{ accountInfo?.user_id || '-' }}</span>
+              <span class="info-value">{{ accountInfo?.account_id || '-' }}</span>
             </div>
           </div>
         </div>
