@@ -40,7 +40,7 @@ docker build -t "$IMAGE_NAME" .
 echo "[4/4] 启动容器..."
 docker run -d \
   --name "$CONTAINER_NAME" \
-  -p "$HOST_PORT":80 \
+  -p 127.0.0.1:"$HOST_PORT":80 \
   --restart always \
   "$IMAGE_NAME"
 
