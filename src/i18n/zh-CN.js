@@ -24,13 +24,14 @@ export default {
     queryBtn: '查询卡密',
     querying: '查询中...'
   },
-  // 第2步 - 输入账号
+  // 第2步 - 输入session
   step2: {
     usageTitle: '使用流程',
     usageDesc: '登录官网 → 获取 session',
     loginLink: '点击跳转',
     sessionLink: '点击获取',
     placeholder: '请输入获取到的 session 信息或者 accessToken',
+    warning: '请勿使用 Team 的 session 进行充值',
     verifyBtn: '验证账号',
     verifying: '验证中...',
     backBtn: '返回修改'
@@ -79,6 +80,7 @@ export default {
     tokenExpired: 'accessToken 已过期',
     tokenInvalid: 'accessToken 格式无效',
     tokenMissingUserId: 'accessToken 缺少 id，请手动登录获取 token 或联系管理员',
+    teamSessionBlocked: '检测到 Team 账号的 session，不支持 Team 账号充值，请使用个人账号',
     chargeFailed: '充值失败',
     networkError: '网络错误，请稍后重试'
   },

@@ -24,13 +24,14 @@ export default {
     queryBtn: 'Query Card Key',
     querying: 'Querying...'
   },
-  // Step 2 - Enter account
+  // Step 2 - Enter session
   step2: {
     usageTitle: 'Instructions',
     usageDesc: 'Login to official site → Get session',
     loginLink: 'Go to login',
     sessionLink: 'Get session',
     placeholder: 'Please enter your session info or accessToken',
+    warning: 'Do NOT use a Team session for recharging',
     verifyBtn: 'Verify Account',
     verifying: 'Verifying...',
     backBtn: 'Go Back'
@@ -79,6 +80,7 @@ export default {
     tokenExpired: 'accessToken has expired',
     tokenInvalid: 'Invalid accessToken format',
     tokenMissingUserId: 'accessToken is missing user id. Please log in manually to get a new token, or contact admin',
+    teamSessionBlocked: 'Team account session detected. Team accounts are not supported for recharging. Please use a personal account',
     chargeFailed: 'Recharge failed',
     networkError: 'Network error, please try again later'
   },

@@ -73,6 +73,7 @@
           </template>
         </el-alert>
         <el-form class="card-form">
+          <p class="session-warning">{{ t('step2.warning') }}</p>
           <el-form-item>
             <el-input v-model="sessionContent" type="textarea" :rows="5" :placeholder="t('step2.placeholder')" :disabled="loading" />
           </el-form-item>
@@ -229,11 +230,60 @@ async function handleQuery() {
   }
 }
 
+// ===== 配置区 =====
+// Team 账号 planType 值（用于前端预拦截，禁止 Team session 充值）
+const TEAM_PLAN_TYPE = 'team'
+
+/**
+ * 检测 session 内容是否为 Team 账号
+ * 支持两种格式：
+ *   1. 完整 session JSON（检查 account.planType）
+ *   2. 纯 accessToken JWT（解码 payload 检查 chatgpt_plan_type）
+ * @param {string} content - 用户输入的 session/token 内容
+ * @returns {boolean} true 表示是 Team 账号，应拦截
+ */
+function isTeamSession(content) {
+  // 尝试作为 JSON 解析
+  try {
+    const json = JSON.parse(content)
+    if (json?.account?.planType === TEAM_PLAN_TYPE) return true
+    // JSON 中可能直接包含 accessToken 字段，继续检查 JWT
+    const token = json?.accessToken
+    if (token && isTeamJwt(token)) return true
+  } catch {
+    // 不是 JSON，当作纯 token 处理
+  }
+  // 尝试作为纯 JWT 解析
+  if (isTeamJwt(content)) return true
+  return false
+}
+
+/**
+ * 解码 JWT payload 检查是否为 Team 账号
+ */
+function isTeamJwt(token) {
+  try {
+    const parts = token.split('.')
+    if (parts.length !== 3) return false
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')))
+    const authInfo = payload['https://api.openai.com/auth']
+    if (authInfo?.chatgpt_plan_type === TEAM_PLAN_TYPE) return true
+  } catch {
+    // 解码失败不拦截，交给后端处理
+  }
+  return false
+}
+
 // 第2步：验证账号
 async function handleVerify() {
   const content = sessionContent.value.trim()
   if (!content) {
     ElMessage.warning(t('step2.placeholder'))
+    return
+  }
+  // 前端预拦截：Team 账号不允许充值
+  if (isTeamSession(content)) {
+    ElMessage.error(t('error.teamSessionBlocked'))
     return
   }
   loading.value = true
@@ -336,6 +386,13 @@ function handleReset() {
 }
 .card-form {
   margin-top: 20px;
+}
+.session-warning {
+  color: #f56c6c;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 12px;
 }
 .full-btn {
   width: 100%;
