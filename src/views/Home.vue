@@ -238,23 +238,15 @@ const TEAM_PLAN_TYPE = 'team'
  * 检测 session 内容是否为 Team 账号
  * 支持两种格式：
  *   1. 完整 session JSON（检查 account.planType）
- *   2. 纯 accessToken JWT（解码 payload 检查 chatgpt_plan_type）
- * @param {string} content - 用户输入的 session/token 内容
+ *   2. JSON 中包含 accessToken 字段时，解码 JWT payload 检查 chatgpt_plan_type
+ * @param {object} json - 已解析的 JSON 对象
  * @returns {boolean} true 表示是 Team 账号，应拦截
  */
-function isTeamSession(content) {
-  // 尝试作为 JSON 解析
-  try {
-    const json = JSON.parse(content)
-    if (json?.account?.planType === TEAM_PLAN_TYPE) return true
-    // JSON 中可能直接包含 accessToken 字段，继续检查 JWT
-    const token = json?.accessToken
-    if (token && isTeamJwt(token)) return true
-  } catch {
-    // 不是 JSON，当作纯 token 处理
-  }
-  // 尝试作为纯 JWT 解析
-  if (isTeamJwt(content)) return true
+function isTeamSession(json) {
+  if (json?.account?.planType === TEAM_PLAN_TYPE) return true
+  // JSON 中可能直接包含 accessToken 字段，继续检查 JWT
+  const token = json?.accessToken
+  if (token && isTeamJwt(token)) return true
   return false
 }
 
@@ -281,8 +273,16 @@ async function handleVerify() {
     ElMessage.warning(t('step2.placeholder'))
     return
   }
+  // 前端预拦截：必须是合法 JSON
+  let parsed
+  try {
+    parsed = JSON.parse(content)
+  } catch {
+    ElMessage.error(t('error.invalidJsonFormat'))
+    return
+  }
   // 前端预拦截：Team 账号不允许充值
-  if (isTeamSession(content)) {
+  if (isTeamSession(parsed)) {
     ElMessage.error(t('error.teamSessionBlocked'))
     return
   }

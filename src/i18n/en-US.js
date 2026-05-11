@@ -81,6 +81,7 @@ export default {
     tokenInvalid: 'Invalid accessToken format',
     tokenMissingUserId: 'accessToken is missing user id. Please log in manually to get a new token, or contact admin',
     teamSessionBlocked: 'Team account session detected. Team accounts are not supported for recharging. Please use a personal account',
+    invalidJsonFormat: 'Invalid session format. Please paste the complete JSON content',
     chargeFailed: 'Recharge failed',
     networkError: 'Network error, please try again later'
   },

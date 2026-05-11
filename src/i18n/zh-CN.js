@@ -81,6 +81,7 @@ export default {
     tokenInvalid: 'accessToken 格式无效',
     tokenMissingUserId: 'accessToken 缺少 id，请手动登录获取 token 或联系管理员',
     teamSessionBlocked: '检测到 Team 账号的 session，不支持 Team 账号充值，请使用个人账号',
+    invalidJsonFormat: 'session 格式不正确，请粘贴完整的 JSON 内容',
     chargeFailed: '充值失败',
     networkError: '网络错误，请稍后重试'
   },
