@@ -91,14 +91,15 @@ Nginx 需要 SPA fallback（`try_files $uri $uri/ /index.html;`），确保 `/en
 ## 充值流程（4步）
 
 1. **输入卡密** - 用户输入充值卡密码，点击查询（已实现）
-2. **输入账号** - 输入目标账号信息（待实现）
-3. **确认充值** - 展示信息确认（待实现）
-4. **完成** - 显示充值结果（待实现）
+2. **输入session** - 输入 session/accessToken 信息（已实现）
+3. **确认充值** - 展示信息确认（已实现）
+4. **完成** - 显示充值结果（已实现）
 
-## 后端接口（待对接）
+## 后端接口（已对接）
 
 | 接口 | 方法 | 说明 |
 |------|------|------|
-| /api/card/query | POST | 查询卡密信息 |
-| /api/account/verify | POST | 验证账号 |
-| /api/recharge/confirm | POST | 确认充值 |
+| /api/home/card/query | POST | 查询卡密信息 |
+| /api/home/chatgpt/check | POST | 验证 session/accessToken |
+| /api/home/card/charge | POST | 执行充值 |
+| /api/home/card/batch_query | POST | 批量查询卡密状态 |
