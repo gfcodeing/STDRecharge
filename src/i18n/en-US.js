@@ -10,7 +10,7 @@ export default {
   // Recharge steps
   steps: {
     inputCardKey: 'Enter Card Key',
-    inputAccount: 'Enter Account',
+    inputAccount: 'Enter Session',
     confirmRecharge: 'Confirm',
     complete: 'Done'
   },

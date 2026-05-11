@@ -52,6 +52,22 @@ npm run dev
 - 用户点击 Header 右侧的 `中文/EN` 按钮切换
 - 语言偏好保存在 localStorage，刷新后保持
 
+### URL 路径语言前缀
+
+支持通过 URL 路径前缀强制指定语言（优先级高于 localStorage）：
+
+| 路径 | 语言 |
+|------|------|
+| `app.wqll.cn/en` 或 `/en/*` | 英文 `en-US` |
+| `app.wqll.cn/zh` 或 `/zh/*` | 中文 `zh-CN` |
+| 其他路径 | 按 localStorage，若无则走 `DEFAULT_LOCALE` |
+
+优先级规则：**URL 路径前缀 > localStorage > 默认语言**。命中前缀时会写回 localStorage，即「URL 优先且持久化」——用户后续再访问不带前缀的链接时仍保持该语言，直到手动切换。
+
+前缀映射配置在 `src/config.js` 的 `LOCALE_PATH_PREFIX_MAP`，解析逻辑在 `src/i18n/index.js` 的 `resolveInitialLocale()`。
+
+Nginx 需要 SPA fallback（`try_files $uri $uri/ /index.html;`），确保 `/en`、`/zh` 这类非真实静态资源路径能回退到 `index.html`——当前 `nginx.conf` 已满足，无需调整。
+
 ## 配置项
 
 所有可配置项集中在 `src/config.js`，包含中文注释说明。

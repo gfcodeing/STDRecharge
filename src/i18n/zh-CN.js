@@ -10,7 +10,7 @@ export default {
   // 充值流程步骤
   steps: {
     inputCardKey: '输入卡密',
-    inputAccount: '输入账号',
+    inputAccount: '输入session',
     confirmRecharge: '确认充值',
     complete: '完成'
   },
