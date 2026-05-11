@@ -5,7 +5,7 @@ IMAGE_NAME="recharge-portal"
 # 容器名称（Docker容器名）
 CONTAINER_NAME="recharge"
 # 映射端口（宿主机端口:容器端口）
-HOST_PORT=80
+HOST_PORT=7734
 # 仓库地址（Git仓库地址）
 REPO_URL="https://github.com/gfcodeing/STDRecharge.git"
 # 部署目录（服务器上的项目路径）
