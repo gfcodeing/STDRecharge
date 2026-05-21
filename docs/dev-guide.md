@@ -88,6 +88,16 @@ Nginx 需要 SPA fallback（`try_files $uri $uri/ /index.html;`），确保 `/en
 - 中文环境直接返回原 msg；非中文命中规则返回 i18n 文案；未命中 fallback 原 msg（避免丢信息）
 - 新增后端错误时：在 `BACKEND_MSG_I18N_RULES` 加一条 `{ match, key }`，并在 `zh-CN.js` / `en-US.js` 的 `error` 下补齐对应 key
 
+## URL 参数自动填充
+
+支持通过 URL 的 `?cdk=` 参数自动填入卡密输入框，方便外部链接直接跳转并预填卡密。
+
+| 示例 URL | 效果 |
+|----------|------|
+| `app.wqll.cn/?cdk=ABCD-1234` | 打开页面时卡密输入框自动填入 `ABCD-1234` |
+
+实现位置：`src/views/Home.vue` `onMounted` 钩子，使用 `URLSearchParams` 读取 `cdk` 参数。
+
 ## 充值流程（4步）
 
 1. **输入卡密** - 用户输入充值卡密码，点击查询（已实现）

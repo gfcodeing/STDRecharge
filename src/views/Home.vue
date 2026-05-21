@@ -173,7 +173,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import { CircleCheckFilled, CircleCloseFilled } from '@element-plus/icons-vue'
@@ -187,6 +187,15 @@ const { t } = i18n
 const currentStep = ref(RechargeStep.INPUT_CARD_KEY)
 const loading = ref(false)
 const cardKey = ref('')
+
+// URL 参数自动填充：?cdk=xxx 时自动填入卡密输入框
+onMounted(() => {
+  const params = new URLSearchParams(window.location.search)
+  const cdkParam = params.get('cdk')
+  if (cdkParam) {
+    cardKey.value = cdkParam
+  }
+})
 const sessionContent = ref('')
 const cardInfo = ref(null)
 const accountInfo = ref(null)
